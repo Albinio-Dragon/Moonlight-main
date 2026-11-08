@@ -1462,6 +1462,9 @@
 /mob/living/carbon/human/proc/is_gagged_speech()
 	return is_soft_muted()
 
+/mob/living/carbon/proc/is_soft_muted()
+	return mouth?.muteinmouth || has_status_effect(/datum/status_effect/knot_tied_oral)
+
 /mob/living/carbon/can_buckle()
 	if((cmode) && (mind) && (!handcuffed) && (stat == CONSCIOUS))
 		return 0
