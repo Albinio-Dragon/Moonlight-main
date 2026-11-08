@@ -56,37 +56,6 @@
 	apply_knot(user, target, force_level, knot_count_param)
 	return TRUE
 
-/datum/component/knotting/proc/try_resist_btm()
-    var/mob/living/carbon/human/top = knotted_owner
-    var/mob/living/carbon/human/btm = knotted_recipient
-    if(!ishuman(top) || !ishuman(btm) || QDELETED(top) || QDELETED(btm))
-        return
-    if(btm.IsStun())   // уже дёргается — не спамим
-        return
-
-    // ── Тот же шанс, что и в handle_bottom_movement ──
-    if(prob(10))
-        // успех — рвём (forceful, если arousal топа > MAX/2 — как при движении)
-        var/list/arousal_data = list()
-        SEND_SIGNAL(top, COMSIG_SEX_GET_AROUSAL, arousal_data)
-        var/forceful = arousal_data["arousal"] > MAX_AROUSAL / 2
-
-        btm.visible_message(
-            span_warning("[btm] thrashes and slips free of [top]'s knot!"),
-            span_notice("I thrash and slip free!"))
-        knot_remove(forceful_removal = forceful)
-        return
-
-    // ── Промах — те же 4% painmoan, иначе просто стан ──
-    if(prob(4))
-        btm.emote("painmoan", forced = TRUE)
-        var/datum/component/arousal/btm_arousal = btm.GetComponent(/datum/component/arousal)
-        btm_arousal?.try_do_pain_effect(PAIN_MILD_EFFECT, FALSE)
-    else
-        btm.visible_message(
-            span_warning("[btm] strains against the knot..."),
-            span_notice("I strain against the knot but can't break free."))
-    btm.Stun(15)   // цена неудачной попытки
 
 /datum/component/knotting/proc/can_knot(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	// Check if user can knot
@@ -200,8 +169,6 @@
 
 	if(!target.has_status_effect(/datum/status_effect/knot_tied))
 		target.apply_status_effect(/datum/status_effect/knot_tied)
-	if(!target.has_status_effect(/datum/status_effect/knot_gagged))          // ← ДОБАВИТЬ
-		target.apply_status_effect(/datum/status_effect/knot_gagged)         // ← ДОБАВИТЬ
 	if(!user.has_status_effect(/datum/status_effect/knotted))
 		user.apply_status_effect(/datum/status_effect/knotted)
 
@@ -471,7 +438,6 @@
 	if(istype(btm))
 		if(!keep_btm_status)
 			btm.remove_status_effect(/datum/status_effect/knot_tied)
-			btm.remove_status_effect(/datum/status_effect/knot_gagged)   // ← ДОБАВИТЬ
 		UnregisterSignal(btm, COMSIG_MOVABLE_MOVED)
 		log_combat(btm, btm, "Stopped knot tugging")
 

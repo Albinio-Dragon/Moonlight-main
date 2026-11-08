@@ -1459,9 +1459,6 @@
 			to_chat(src, "<span class='warning'>[src] has removed their leash!</span>")
 			src.remove_status_effect(/datum/status_effect/leash_pet)
 
-/mob/living/carbon/proc/is_soft_muted()
-	return mouth?.muteinmouth || has_status_effect(/datum/status_effect/knot_gagged)
-
 /mob/living/carbon/human/proc/is_gagged_speech()
 	return is_soft_muted()
 

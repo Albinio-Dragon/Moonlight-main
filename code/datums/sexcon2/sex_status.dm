@@ -72,25 +72,3 @@
 		SEND_SIGNAL(user, COMSIG_SEX_REMOVE_KNOT, do_forceful_removal)
 	return FALSE
 
-/atom/movable/screen/alert/status_effect/knot_tied/Click()
-    ..()
-    var/mob/living/carbon/human/user = usr
-    if(!istype(user))
-        return FALSE
-    var/datum/component/knotting/knot_comp = user.GetComponent(/datum/component/knotting)
-    if(!knot_comp || !knot_comp.knotted_status)
-        return FALSE
-    if(knot_comp.knotted_recipient != user)
-        return FALSE
-    knot_comp.try_resist_btm()
-    return FALSE
-
-/datum/status_effect/knot_gagged
-	id = "knot_gagged"
-	status_type = STATUS_EFFECT_UNIQUE
-	alert_type = /atom/movable/screen/alert/status_effect/knot_gagged
-
-/atom/movable/screen/alert/status_effect/knot_gagged
-	name = "Gagged"
-	desc = "Something is filling my mouth..."
-	icon_state = "debuff"
