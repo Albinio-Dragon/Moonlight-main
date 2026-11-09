@@ -177,13 +177,13 @@
 	var/static/list/loc_connections = list(COMSIG_ATOM_EXIT = PROC_REF(on_exit))
 	AddElement(/datum/element/connect_loc, loc_connections)
 	RegisterSignal(src, COMSIG_ATOM_DIR_CHANGE, PROC_REF(on_dir_change)) // NEW: обновление слоя при повороте
-	handle_layer() // NEW
+	update_layer_and_plane() // NEW
 
 /obj/structure/chair/wood/rogue/proc/on_dir_change(datum/source, old_dir, new_dir) // NEW
 	SIGNAL_HANDLER
-	handle_layer()
+	update_layer_and_plane()
 
-/obj/structure/chair/wood/rogue/proc/handle_layer() // NEW
+/obj/structure/chair/wood/rogue/proc/update_layer_and_plane() // NEW: не конфликтует с базовым handle_layer
 	if(dir == NORTH)
 		layer = ABOVE_MOB_LAYER
 		plane = GAME_PLANE_UPPER
@@ -348,13 +348,13 @@
 /obj/structure/chair/wood/rogue/post_buckle_mob(mob/living/M)
 	..()
 	density = TRUE
-	handle_layer() // NEW
+	update_layer_and_plane() // NEW
 //	M.set_mob_offsets("bed_buckle", _x = 0, _y = 5)
 
 /obj/structure/chair/wood/rogue/post_unbuckle_mob(mob/living/M)
 	..()
 	density = FALSE
-	handle_layer() // NEW
+	update_layer_and_plane() // NEW
 //	M.reset_offsets("bed_buckle")
 
 
@@ -372,13 +372,13 @@
 /obj/structure/chair/stool/rogue/Initialize(mapload) // NEW
 	. = ..()
 	RegisterSignal(src, COMSIG_ATOM_DIR_CHANGE, PROC_REF(on_dir_change))
-	handle_layer()
+	update_layer_and_plane()
 
 /obj/structure/chair/stool/rogue/proc/on_dir_change(datum/source, old_dir, new_dir) // NEW
 	SIGNAL_HANDLER
-	handle_layer()
+	update_layer_and_plane()
 
-/obj/structure/chair/stool/rogue/proc/handle_layer() // NEW
+/obj/structure/chair/stool/rogue/proc/update_layer_and_plane() // NEW: не конфликтует с базовым handle_layer
 	if(dir == NORTH)
 		layer = ABOVE_MOB_LAYER
 		plane = GAME_PLANE_UPPER
@@ -388,11 +388,11 @@
 
 /obj/structure/chair/stool/rogue/post_buckle_mob(mob/living/M) // NEW
 	..()
-	handle_layer()
+	update_layer_and_plane()
 
 /obj/structure/chair/stool/rogue/post_unbuckle_mob(mob/living/M) // NEW
 	..()
-	handle_layer()
+	update_layer_and_plane()
 
 /obj/item/chair/stool/bar/rogue
 	name = "stool"
