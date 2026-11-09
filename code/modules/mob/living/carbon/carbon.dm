@@ -1431,11 +1431,20 @@
 	. = ..()
 	if(!.)
 		return
-	if(mouth?.muteinmouth)
+	// ── HARD mute: предмет во рту с hard_muteinmouth → речь не уходит вообще ──
+	if(mouth?.hard_muteinmouth)
 		return FALSE
+
+	// ── SOFT mute (muteinmouth) больше НЕ блокирует речь —
+	//    текст подменяется на мычание в say_quote()/lang_treat(),
+	//    а громкость регулируется в say(). См. шаги 2–5. ──
+
+	// ── Чужая рука на рту — по-прежнему hard ──
 	for(var/obj/item/grabbing/grab in grabbedby)
 		if((grab.sublimb_grabbed == BODY_ZONE_PRECISE_MOUTH) && (get_location_accessible(src, BODY_ZONE_PRECISE_MOUTH)))
 			return FALSE
+
+	// ── Под водой лёжа — hard ──
 	if(istype(loc, /turf/open/water) && !(mobility_flags & MOBILITY_STAND))
 		return FALSE
 
@@ -1449,6 +1458,12 @@
 		if(!QDELETED(src))
 			to_chat(src, "<span class='warning'>[src] has removed their leash!</span>")
 			src.remove_status_effect(/datum/status_effect/leash_pet)
+
+/mob/living/carbon/human/proc/is_gagged_speech()
+	return is_soft_muted()
+
+/mob/living/carbon/proc/is_soft_muted()
+	return mouth?.muteinmouth || has_status_effect(/datum/status_effect/knot_tied_oral)
 
 /mob/living/carbon/can_buckle()
 	if((cmode) && (mind) && (!handcuffed) && (stat == CONSCIOUS))

@@ -38,7 +38,12 @@
 	if(!penis)
 		return FALSE
 	switch(penis.penis_type)
-		if(PENIS_TYPE_KNOTTED, PENIS_TYPE_TAPERED_DOUBLE_KNOTTED, PENIS_TYPE_BARBED_KNOTTED)
+		if(PENIS_TYPE_KNOTTED,
+		PENIS_TYPE_TAPERED_DOUBLE_KNOTTED,
+		PENIS_TYPE_BARBED_KNOTTED,
+		PENIS_TYPE_EQUINE_KNOTTED,
+		PENIS_TYPE_TAPERED_KNOTTED,
+		)
 			return TRUE
 	return FALSE
 
@@ -50,6 +55,7 @@
 	handle_existing_knots(user, target)
 	apply_knot(user, target, force_level, knot_count_param)
 	return TRUE
+
 
 /datum/component/knotting/proc/can_knot(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	// Check if user can knot
@@ -261,7 +267,7 @@
 		return TRUE
 
 	var/dist = get_dist(top, btm)
-	if(dist > 1 && dist < 6)
+	if(dist > 1 && dist < 3)
 		return FALSE
 
 	if(dist > 1)
@@ -278,7 +284,7 @@
 /datum/component/knotting/proc/handle_knot_distance_management(mob/living/carbon/human/top, mob/living/carbon/human/btm)
 	var/dist = get_dist(top, btm)
 
-	if(dist > 1 && dist < 6)
+	if(dist > 1 && dist < 3)
 		tugging_knot = TRUE
 		for(var/i in 1 to 3)
 			step_towards(btm, top)
