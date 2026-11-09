@@ -70,8 +70,9 @@
 // Uncomment this for NPCs to display their 'thoughts' (AI planning steps) above their heads. Useful for debugging NPC logic.
 // #define NPC_THINK_DEBUG
 
-// Comment this to remove the PQ system
-//#define USES_PQ
+/* Comment this to remove the PQ system
+#define USES_PQ
+*/
 // Comment this to remove traits based skill gating (The traits exist, but it will not have any effect)
 #define USES_TRAIT_SKILL_GATING
 
