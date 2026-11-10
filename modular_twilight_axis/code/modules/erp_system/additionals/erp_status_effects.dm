@@ -254,6 +254,42 @@
 	icon_state = "knotted"
 	icon = 'modular_twilight_axis/icons/roguetown/misc/screen_alert.dmi'
 
+// ═══ ОРАЛЬНЫЙ СТАТУС — отдельный тип (не подтип, чтобы has_status_effect не путал) ═══
+/datum/status_effect/knot_tied_oral
+	id = "knot_tied_oral"
+	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = /atom/movable/screen/alert/status_effect/knot_tied/oral
+	effectedstats = list(STATKEY_STR = -1, STATKEY_WIL = -2, STATKEY_SPD = -2, STATKEY_INT = -3)
+
+// Алерт — ПОДТИП базового, чтобы унаследовать Click()
+/atom/movable/screen/alert/status_effect/knot_tied/oral
+	name = "Knotted (Oral)"
+	desc = "My mouth is full..."
+	icon_state = "knotted"
+	icon = 'modular_twilight_axis/icons/roguetown/misc/screen_alert.dmi'
+
+/atom/movable/screen/alert/status_effect/knot_tied/Click()
+	..()
+	var/mob/living/carbon/human/user = usr
+	if(!istype(user))
+		return FALSE
+	if(user.stat == DEAD)
+		return FALSE
+	for(var/mob/living/carbon/human/potential in view(10, user))
+		if(potential == user)
+			continue
+		var/datum/component/erp_knotting/K = potential.GetComponent(/datum/component/erp_knotting)
+		if(!K || !K.active_links || !K.active_links.len)
+			continue
+		for(var/datum/erp_knot_link/L as anything in K.active_links)
+			if(!istype(L) || !L.is_valid())
+				continue
+			if(L.btm != user)
+				continue
+			K.try_pull_out(user, L.penis_org, L.penis_unit_id)
+			return FALSE
+	return FALSE
+
 /datum/status_effect/knot_fucked_stupid
 	id = "knot_fucked_stupid"
 	duration = 2 MINUTES

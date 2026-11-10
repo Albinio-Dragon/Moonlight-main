@@ -6,7 +6,7 @@
 /datum/quirk/amphibious
 	name = "Amphibious"
 	desc = "Through some quirk of my heritage, I can breathe in water just as readily as in air."
-	allowed_species = list(/datum/species/anthromorph, /datum/species/anthromorphsmall, /datum/species/lizardfolk)
+	//allowed_species = list(/datum/species/anthromorph, /datum/species/anthromorphsmall, /datum/species/lizardfolk)
 	restricted_virtues = list(/datum/virtue/combat/second_chance) // you're probably already unbreathing
 	added_traits = list(TRAIT_WATERBREATHING) // notably NOT breathless
 	ui_fa_icon = "lungs"
@@ -21,7 +21,7 @@
 	name = "Otherworldly"
 	desc = "No-one can quite seem to decide whether I'm mesmerizing or horrifying."
 	added_traits = list(TRAIT_BEAUTIFUL_UNCANNY)
-	allowed_species = list(/datum/species/aasimar, /datum/species/dullahan, /datum/species/construct/metal, /datum/species/ooze)
+	//allowed_species = list(/datum/species/aasimar, /datum/species/dullahan, /datum/species/construct/metal, /datum/species/ooze)
 	allowed_virtues = list(/datum/virtue/combat/second_chance, /datum/virtue/utility/feytouched) // hacky, but w/e
 	allowed_quirks = list(/datum/quirk/feytouched)
 	ui_fa_icon = "person-rays"
@@ -45,7 +45,7 @@
 	name = "Outdoorsy"
 	desc = "I feel at home in the wyld. Sleeping in tree branches is almost as comfortable as a bed to me."
 	added_traits = list(TRAIT_OUTDOORSMAN)
-	allowed_species = list(/datum/species/tabaxi, /datum/species/anthromorph, /datum/species/anthromorphsmall, /datum/species/dullahan, /datum/species/elf/wood)
+	//allowed_species = list(/datum/species/tabaxi, /datum/species/anthromorph, /datum/species/anthromorphsmall, /datum/species/dullahan, /datum/species/elf/wood)
 	ui_fa_icon = "tree"
 
 /datum/quirk/watersleep
@@ -53,7 +53,7 @@
 	desc = "I feel at home in the water. Sleeping beneath the waves is almost as comfortable as a bed to me."
 	mechdesc = "Does not come with water breathing."
 	added_traits = list(TRAIT_WATERSLEEP)
-	allowed_species = list(/datum/species/anthromorph, /datum/species/anthromorphsmall, /datum/species/lizardfolk, /datum/species/ooze, /datum/species/akula) // same as amphibious except with races that already can breathe water
+	//allowed_species = list(/datum/species/anthromorph, /datum/species/anthromorphsmall, /datum/species/lizardfolk, /datum/species/ooze, /datum/species/akula) // same as amphibious except with races that already can breathe water
 	ui_fa_icon = "water"
 
 /datum/quirk/caustic
@@ -61,7 +61,7 @@
 	desc = "Through quills, spines, or a caustic makeup, touching me isn't exactly pleasant."
 	mechdesc = "Doesn't affect grabs."
 	added_traits = list(TRAIT_CAUSTIC)
-	allowed_species = list(/datum/species/ooze, /datum/species/anthromorph, /datum/species/anthromorphsmall, /datum/species/aasimar, /datum/species/dullahan)
+	//allowed_species = list(/datum/species/ooze, /datum/species/anthromorph, /datum/species/anthromorphsmall, /datum/species/aasimar, /datum/species/dullahan)
 	ui_fa_icon = "road-spikes"
 
 /datum/quirk/nightowl
