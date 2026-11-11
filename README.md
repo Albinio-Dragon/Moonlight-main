@@ -1,6 +1,6 @@
 <p align="center">
  <img width="450px" src="https://github.com/user-attachments/assets/6b803f1d-3262-4373-8531-8f8415a3d05f" align="center" alt="Twilight Fortress" />
- <h1 align="center">Twilight Axis</h1>
+ <h1 align="center">Moonlight</h1>
  <h2 align="center">Roleplay Medieval High-Fantasy | D&D-like Server</h2>
 </p>
 
@@ -8,7 +8,7 @@
 
 | Website                   | Link                                           |
 |---------------------------|------------------------------------------------|
-| Discord          | [https://discord.gg/6Sga5Uvdn6](https://discord.gg/6Sga5Uvdn6) |
+| Discord          | [https://discord.gg/maw7mFCxs](https://discord.gg/maw7mFCxs) |
 | Wiki Twilight Axis                     | [Wiki](https://wiki.twilight-fortress-axis.ru/index.php?title=%D0%97%D0%B0%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F_%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0) |
 
   ## LICENSE
