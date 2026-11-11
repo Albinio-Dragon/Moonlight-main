@@ -396,14 +396,16 @@
 
 	. = 0
 
-	if(!istext(file_path))
-		if(!isfile(file_path))
-			CRASH("rustg_sound_length error: Passed non-text object")
+	// Принимаем /sound — распаковываем в путь
+	if(istype(file_path, /sound))
+		var/sound/S = file_path
+		if(!istext(S.file) && !isfile(S.file))
+			CRASH("rustg_sound_length error: /sound has non-static file ref")
+		file_path = S.file
 
-		if(length("[file_path]")) // Runtime generated RSC references stringify into 0-length strings.
-			file_path = "[file_path]"
-		else
-			CRASH("rustg_sound_length does not support non-static file refs.")
+		if(!istext(file_path))
+			if(!isfile(file_path))
+				CRASH("rustg_sound_length error: Passed non-text object")
 
 	var/cached_length = sound_cache[file_path]
 	if(!isnull(cached_length))
@@ -411,7 +413,7 @@
 
 	var/ret = RUSTG_CALL(RUST_G, "sound_len")(file_path)
 	var/as_num = text2num(ret)
-	if(isnull(ret))
+	if(isnull(as_num))                       // ← было isnull(ret)
 		. = 0
 		CRASH("rustg_sound_length error: [ret]")
 
