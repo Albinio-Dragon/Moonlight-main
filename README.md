@@ -14,6 +14,13 @@
   ## LICENSE
 Original Fork Originates from [commit c28b351807bad950d2b323ada048190844bbda32](https://github.com/tgstation/tgstation/commit/c28b351807bad950d2b323ada048190844bbda32).
 
+We are not the creators of the work Twilight-Axis.
+If you are looking for the original version of the game, here is the link.
+(https://github.com/Twilight-Fortress-SS13/Twilight-Axis).
+
+This build has been reconfigured for host-specific requirements on Debian Linux using a Docker file.
+Operation on Windows is not guaranteed.
+
 All code after [commit 333c566b88108de218d882840e61928a9b759d8f on 2014/31/12 at 4:38 PM PST](https://github.com/tgstation/tgstation/commit/333c566b88108de218d882840e61928a9b759d8f) is licensed under [GNU AGPL v3](https://www.gnu.org/licenses/agpl-3.0.html).
 
 All code before [commit 333c566b88108de218d882840e61928a9b759d8f on 2014/31/12 at 4:38 PM PST](https://github.com/tgstation/tgstation/commit/333c566b88108de218d882840e61928a9b759d8f) is licensed under [GNU GPL v3](https://www.gnu.org/licenses/gpl-3.0.html).
