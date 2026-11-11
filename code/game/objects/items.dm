@@ -229,6 +229,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/icon/experimental_onhip = FALSE
 	var/icon/experimental_onback = FALSE
 	var/muteinmouth = TRUE
+	var/hard_muteinmouth = FALSE
 	///using spit emote spits the item out of our mouth and falls out after some time
 	var/spitoutmouth = TRUE
 

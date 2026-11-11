@@ -71,3 +71,4 @@
 		var/do_forceful_removal = arousal_data["arousal"] > MAX_AROUSAL / 2
 		SEND_SIGNAL(user, COMSIG_SEX_REMOVE_KNOT, do_forceful_removal)
 	return FALSE
+

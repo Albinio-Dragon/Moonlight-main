@@ -21,8 +21,15 @@
 	var/mob/living/top = L.top
 	var/mob/living/btm = L.btm
 
-	if(!btm.has_status_effect(/datum/status_effect/knot_tied))
-		btm.apply_status_effect(/datum/status_effect/knot_tied)
+	// ── oral или base — по органу приёма ──
+	var/is_oral = L.receiving_org && L.receiving_org.erp_organ_type == SEX_ORGAN_MOUTH
+	if(is_oral)
+		if(!btm.has_status_effect(/datum/status_effect/knot_tied_oral))
+			btm.apply_status_effect(/datum/status_effect/knot_tied_oral)
+	else
+		if(!btm.has_status_effect(/datum/status_effect/knot_tied))
+			btm.apply_status_effect(/datum/status_effect/knot_tied)
+
 	if(!top.has_status_effect(/datum/status_effect/knotted))
 		top.apply_status_effect(/datum/status_effect/knotted)
 
@@ -34,12 +41,18 @@
 	var/k = C ? C.count_knots_on_target(btm) : 1
 	if(btm.stat != DEAD)
 		switch(k)
-			if(1) to_chat(btm, span_userdanger("You have been knotted!"))
-			if(2) to_chat(btm, span_userdanger("You have been double-knotted!"))
-			if(3) to_chat(btm, span_userdanger("You have been triple-knotted!"))
-			if(4) to_chat(btm, span_userdanger("You have been quad-knotted!"))
-			if(5) to_chat(btm, span_userdanger("You have been penta-knotted!"))
-			else to_chat(btm, span_userdanger("You have been ultra-knotted!"))
+			if(1)
+				to_chat(btm, span_userdanger("You have been knotted!"))
+			if(2)
+				to_chat(btm, span_userdanger("You have been double-knotted!"))
+			if(3)
+				to_chat(btm, span_userdanger("You have been triple-knotted!"))
+			if(4)
+				to_chat(btm, span_userdanger("You have been quad-knotted!"))
+			if(5)
+				to_chat(btm, span_userdanger("You have been penta-knotted!"))
+			else
+				to_chat(btm, span_userdanger("You have been ultra-knotted!"))
 
 	if(force_level > SEX_FORCE_MID)
 		var/datum/component/arousal/A = btm.GetComponent(/datum/component/arousal)
@@ -73,7 +86,7 @@
 
 	if(remove_btm_status)
 		btm.remove_status_effect(/datum/status_effect/knot_tied)
-
+		btm.remove_status_effect(/datum/status_effect/knot_tied_oral)
 	if(remove_top_status)
 		top.remove_status_effect(/datum/status_effect/knotted)
 

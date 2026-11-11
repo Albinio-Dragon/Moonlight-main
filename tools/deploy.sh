@@ -11,8 +11,17 @@ fi
 
 mkdir -p \
     $1/_maps \
-    $1/icons/ \
-	$1/strings
+    $1/data/spritesheets \
+    $1/icons \
+    $1/modular \
+    $1/modular_deserttown \
+    $1/modular_twilight_axis \
+    $1/strings \
+    $1/tgui/public \
+    $1/ta_statpanel \
+    $1/goon \
+    $1/html \
+    $1/interface \
 
 if [ -d ".git" ]; then
   mkdir -p $1/.git/logs
@@ -23,6 +32,14 @@ cp roguetown.dmb roguetown.rsc $1/
 cp -r _maps/* $1/_maps/
 cp -r icons/* $1/icons/
 cp -r strings/* $1/strings/
+cp -r tgui/public/* $1/tgui/public/
+cp -r ta_statpanel/* $1/ta_statpanel/
+cp -r modular/* $1/modular/ || true
+cp -r modular_deserttown/* $1/modular_deserttown/ || true
+cp -r modular_twilight_axis/* $1/modular_twilight_axis/ || true
+cp -r goon/* $1/goon/ || true
+cp -r html/* $1/html/ || true
+cp -r interface/* $1/interface/ || true
 
 #remove .dm files from _maps
 
