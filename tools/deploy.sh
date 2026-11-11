@@ -22,6 +22,7 @@ mkdir -p \
     $1/goon \
     $1/html \
     $1/interface \
+	$1/sound \   
 
 if [ -d ".git" ]; then
   mkdir -p $1/.git/logs
@@ -40,6 +41,7 @@ cp -r modular_twilight_axis/* $1/modular_twilight_axis/ || true
 cp -r goon/* $1/goon/ || true
 cp -r html/* $1/html/ || true
 cp -r interface/* $1/interface/ || true
+cp -r sound/* $1/sound/ || true 
 
 #remove .dm files from _maps
 
