@@ -24,7 +24,14 @@
 				return
 
 			var/sound_path = cm.musicpath[1]
-			var/sound_len = rustg_sound_length(sound_path)
+			var/resolved_path = sound_path
+			if(istype(sound_path, /sound))
+				var/sound/S = sound_path
+				resolved_path = S.file
+
+			var/sound_len = 0
+			if(istext(resolved_path) || isfile(resolved_path))
+				sound_len = rustg_sound_length(resolved_path)
 
 			user.client.tgui_panel?.play_music("byond://[REF(sound_path)]", list("title" = cm.name, "artist" = cm.credits, "duration" = "[round(sound_len / 10)] seconds"))
 
