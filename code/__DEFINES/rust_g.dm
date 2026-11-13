@@ -403,9 +403,20 @@
 			CRASH("rustg_sound_length error: /sound has non-static file ref")
 		file_path = S.file
 
-		if(!istext(file_path))
-			if(!isfile(file_path))
-				CRASH("rustg_sound_length error: Passed non-text object")
+	// Принимаем /sound-датум и разворачиваем в путь (defense in depth)
+	if(istype(file_path, /sound))
+		var/sound/S = file_path
+		file_path = S.file
+
+	if(!istext(file_path))
+		if(!isfile(file_path))
+			log_world("rustg_sound_length: passed non-text/non-file: [file_path]")
+			return 0
+
+		if(length("[file_path]"))
+			file_path = "[file_path]"
+		else
+			CRASH("rustg_sound_length does not support non-static file refs.")
 
 	var/cached_length = sound_cache[file_path]
 	if(!isnull(cached_length))
@@ -413,9 +424,12 @@
 
 	var/ret = RUSTG_CALL(RUST_G, "sound_len")(file_path)
 	var/as_num = text2num(ret)
-	if(isnull(as_num))                       // ← было isnull(ret)
-		. = 0
-		CRASH("rustg_sound_length error: [ret]")
+	if(isnull(as_num))
+		// Мягкий вариант: не роняем init, но громко логируем — битый контент не должен
+		// убивать инициализацию всех атомов раунда.
+		log_world("rustg_sound_length: cannot read length of '[file_path]': [ret]")
+		sound_cache[file_path] = 0
+		return 0
 
 	sound_cache[file_path] = as_num
 	return as_num
