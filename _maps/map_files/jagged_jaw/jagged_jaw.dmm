@@ -98267,6 +98267,10 @@
 	},
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/licharena/bossroom/grim)
+"lPy" = (
+/obj/structure/roguemachine/noticeboard,
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/outdoors/town/grim)
 "lPA" = (
 /obj/structure/bookcase/random_recipes,
 /turf/open/floor/carpet/stellar{
@@ -511089,7 +511093,7 @@ gRB
 gRB
 gRB
 gRB
-gRB
+lPy
 cVw
 cql
 mNI

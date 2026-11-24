@@ -30,6 +30,11 @@
 	. = ..()
 	var/static/list/loc_connections = list(COMSIG_ATOM_EXIT = PROC_REF(on_exit))
 	AddElement(/datum/element/connect_loc, loc_connections)
+	RegisterSignal(src, COMSIG_ATOM_DIR_CHANGE, PROC_REF(on_dir_change)) // NEW: обновление слоя при повороте
+	handle_layer()
+
+/obj/structure/chair/bench/proc/on_dir_change(datum/source, old_dir, new_dir) // NEW
+	SIGNAL_HANDLER
 	handle_layer()
 
 /obj/structure/chair/bench/handle_layer()
@@ -78,10 +83,12 @@
 /obj/structure/chair/bench/post_buckle_mob(mob/living/M)
 	..()
 	density = TRUE
+	handle_layer() // NEW: гарантируем правильный слой при посадке (в т.ч. north — над мобом)
 
 /obj/structure/chair/bench/post_unbuckle_mob(mob/living/M)
 	..()
 	density = FALSE
+	handle_layer() // NEW
 
 /obj/structure/chair/bench/CanAStarPass(ID, travel_dir, caller)
 	if(travel_dir == dir)
@@ -169,6 +176,20 @@
 	. = ..()
 	var/static/list/loc_connections = list(COMSIG_ATOM_EXIT = PROC_REF(on_exit))
 	AddElement(/datum/element/connect_loc, loc_connections)
+	RegisterSignal(src, COMSIG_ATOM_DIR_CHANGE, PROC_REF(on_dir_change)) // NEW: обновление слоя при повороте
+	update_layer_and_plane() // NEW
+
+/obj/structure/chair/wood/rogue/proc/on_dir_change(datum/source, old_dir, new_dir) // NEW
+	SIGNAL_HANDLER
+	update_layer_and_plane()
+
+/obj/structure/chair/wood/rogue/proc/update_layer_and_plane() // NEW: не конфликтует с базовым handle_layer
+	if(dir == NORTH)
+		layer = ABOVE_MOB_LAYER
+		plane = GAME_PLANE_UPPER
+	else
+		layer = OBJ_LAYER
+		plane = GAME_PLANE
 
 /obj/structure/chair/wood/rogue/chair3
 	icon_state = "chair3"
@@ -327,11 +348,13 @@
 /obj/structure/chair/wood/rogue/post_buckle_mob(mob/living/M)
 	..()
 	density = TRUE
+	update_layer_and_plane() // NEW
 //	M.set_mob_offsets("bed_buckle", _x = 0, _y = 5)
 
 /obj/structure/chair/wood/rogue/post_unbuckle_mob(mob/living/M)
 	..()
 	density = FALSE
+	update_layer_and_plane() // NEW
 //	M.reset_offsets("bed_buckle")
 
 
@@ -345,6 +368,31 @@
 	blade_dulling = DULLING_BASHCHOP
 	destroy_sound = 'sound/combat/hits/onwood/destroyfurniture.ogg'
 	attacked_sound = "woodimpact"
+
+/obj/structure/chair/stool/rogue/Initialize(mapload) // NEW
+	. = ..()
+	RegisterSignal(src, COMSIG_ATOM_DIR_CHANGE, PROC_REF(on_dir_change))
+	update_layer_and_plane()
+
+/obj/structure/chair/stool/rogue/proc/on_dir_change(datum/source, old_dir, new_dir) // NEW
+	SIGNAL_HANDLER
+	update_layer_and_plane()
+
+/obj/structure/chair/stool/rogue/proc/update_layer_and_plane() // NEW: не конфликтует с базовым handle_layer
+	if(dir == NORTH)
+		layer = ABOVE_MOB_LAYER
+		plane = GAME_PLANE_UPPER
+	else
+		layer = OBJ_LAYER
+		plane = GAME_PLANE
+
+/obj/structure/chair/stool/rogue/post_buckle_mob(mob/living/M) // NEW
+	..()
+	update_layer_and_plane()
+
+/obj/structure/chair/stool/rogue/post_unbuckle_mob(mob/living/M) // NEW
+	..()
+	update_layer_and_plane()
 
 /obj/item/chair/stool/bar/rogue
 	name = "stool"

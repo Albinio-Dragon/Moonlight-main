@@ -305,7 +305,7 @@
 			top.remove_status_effect(/datum/status_effect/knotted)
 		if(remove_btm_status && !QDELETED(btm))
 			btm.remove_status_effect(/datum/status_effect/knot_tied)
-
+			btm.remove_status_effect(/datum/status_effect/knot_tied_oral)
 	qdel(L)
 	_finalize_if_empty()
 	return TRUE

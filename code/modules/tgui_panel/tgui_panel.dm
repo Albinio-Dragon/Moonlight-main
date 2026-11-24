@@ -117,7 +117,7 @@
 
 	if(type == "audio/protected")
 		if(!protected_playback_warned)
-			to_chat(client, span_warning("The music track could not be played - it returned a protected playback error, likely due to being copyrighted."))
+			to_chat(client, span_warning("Нажмите ещё раз, звук загружается"))
 			protected_playback_warned = TRUE
 			addtimer(VARSET_CALLBACK(src, protected_playback_warned, FALSE), 10 SECONDS)
 		return TRUE

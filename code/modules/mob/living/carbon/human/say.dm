@@ -1,6 +1,13 @@
 /mob/living/carbon/human/say_mod(input, message_mode)
+	if(is_gagged_speech())
+		var/ending = copytext_char(input, length_char(input))
+		if(ending == "!")
+			return "exclaims"
+		if(ending == "?")
+			return "asks"
+		return "murmurs"
 	verb_say = dna.species.say_mod
-	if(slurring || feigning_impairment) // TA EDIT
+	if(slurring || feigning_impairment)
 		return "slurs"
 	else
 		. = ..()
@@ -102,15 +109,41 @@
 				winset(client, "input", "text=[null]")
 
 /mob/living/carbon/human/send_speech(message, message_range = 6, obj/source = src, bubble_type = bubble_icon, list/spans, datum/language/message_language=null, message_mode, original_message)
-	. = ..()
-	if(message_mode != MODE_WHISPER)
+	if(is_gagged_speech())
+		var/raw = original_message || message
+		var/is_yell = FALSE
+		if(!isnull(raw) && length_char(raw) >= 2)
+			if(copytext_char(raw, length_char(raw) - 1) == "!!")
+				is_yell = TRUE
+		if(is_yell)
+			message = pick("MMPH!", "MMMPH!", "MMF!", "MMPHH!")
+			spans -= SPAN_YELL
+		else
+			var/is_question = !isnull(raw) && length_char(raw) && copytext_char(raw, length_char(raw)) == "?"
+			if(is_question)
+				message = pick("Mmph...?", "Mmmph...?", "Mmf...?")
+			else
+				message = pick("Mmph...", "Mmmph...", "Mmf...", "Mm...")
+			message_range = 3
+			spans |= SPAN_ITALICS
+	. = ..(message, message_range, source, bubble_type, spans, message_language, message_mode)
+	if(message_mode != MODE_WHISPER && !is_gagged_speech())
 		send_voice(message)
 
 /mob/living/carbon/human/proc/send_voice(message, skip_thingy)
 	if(!message || !length(message))
 		return
+	if(is_gagged_speech())
+		playsound(get_turf(src), 'sound/misc/talk.ogg', 30, FALSE, -3)
+		return
 	if(dna.species)
 		dna.species.send_voice(src)
+
+
+/mob/living/carbon/human/lang_treat(atom/movable/speaker, datum/language/language, raw_message, list/spans, message_mode, no_quote = FALSE, show_icons = TRUE)
+	if(is_gagged_speech())
+		return no_quote ? quoteless_say_quote(raw_message, spans, message_mode, raw_message) : say_quote(raw_message, spans, message_mode, raw_message)
+	return ..()
 
 /datum/species/proc/send_voice(mob/living/carbon/human/H)
 	playsound(get_turf(H), 'sound/misc/talk.ogg', 100, FALSE, -1)

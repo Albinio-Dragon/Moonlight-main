@@ -12,9 +12,9 @@
 			combat_music = cm
 			custom_cmode_enabled = FALSE
 			return CHARACTER_ACT_DATA_UPDATE
+
 		if("preview_combat_music")
 			var/path = text2path(params["combat_music"])
-			// This is just here to check that they're not passing us a bad path
 			if(!(path in GLOB.cmode_tracks_by_type))
 				return CHARACTER_ACT_DATA_UPDATE
 			var/datum/combat_music/cm = GLOB.cmode_tracks_by_type[path]
@@ -24,11 +24,27 @@
 				return
 
 			var/sound_path = cm.musicpath[1]
-			var/sound_len = rustg_sound_length(sound_path)
+			var/resolved_path = sound_path
+			if(istype(sound_path, /sound))
+				var/sound/S = sound_path
+				resolved_path = S.file
 
-			user.client.tgui_panel?.play_music("byond://[REF(sound_path)]", list("title" = cm.name, "artist" = cm.credits, "duration" = "[round(sound_len / 10)] seconds"))
+			// без типа /file — просто file-объект
+			var/f = isfile(resolved_path) ? resolved_path : file(resolved_path)
 
+			// имя в кэше клиента должно быть «безопасным»
+			var/cache_name = "cmode_[REF(cm)].ogg"
+			user << browse_rsc(f, cache_name)
+
+			var/sound_len = rustg_sound_length(resolved_path)
+
+			user.client.tgui_panel?.play_music("byond://[cache_name]", list(
+				"title"    = cm.name,
+				"artist"   = cm.credits,
+				"duration" = "[round(sound_len / 1000)] seconds",
+			))
 			return CHARACTER_ACT_DATA_UPDATE
+
 		if("upload_custom_combat_music")
 			if(!can_use_custom_combat_music(user.ckey))
 				return CHARACTER_ACT_DATA_UPDATE

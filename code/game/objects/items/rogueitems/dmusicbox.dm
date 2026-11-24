@@ -98,7 +98,15 @@
 
 	lastfilechange = world.time
 	curfile = newfile
-	soundloop.mid_length = rustg_sound_length("[curfile]")
+
+	// curfile может быть /sound-датумом или путём — нормализуем перед RustG
+	var/resolved_curfile = curfile
+	if(istype(curfile, /sound))
+		var/sound/S = curfile
+		resolved_curfile = S.file
+
+	if(istext(resolved_curfile) || isfile(resolved_curfile))
+		soundloop.mid_length = max(rustg_sound_length(resolved_curfile), 1)
 
 	loaded = FALSE
 	update_icon()
@@ -112,9 +120,16 @@
 	playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
 	if(!playing)
 		if(curfile)
-			playing = TRUE
-			soundloop.set_mid_sounds(list(curfile))
-			soundloop.start()
+			var/resolved_curfile = curfile
+			if(istype(curfile, /sound))
+				var/sound/S = curfile
+				resolved_curfile = S.file
+			if(istext(resolved_curfile) || isfile(resolved_curfile))
+				playing = TRUE
+				soundloop.set_mid_sounds(list(resolved_curfile))
+				soundloop.start()
+			else
+				say("The record is damaged!")
 	else
 		playing = FALSE
 		soundloop.stop()

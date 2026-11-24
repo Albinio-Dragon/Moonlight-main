@@ -67,7 +67,7 @@ const PopupCombatMusicInner = (props: { constantData: ConstantData }) => {
 
   return (
     <Stack fill vertical p={2}>
-      {can_custom_combat_music && (
+      {!!can_custom_combat_music && (
         <Stack.Item>
           <Section title="Custom Combat Music">
             <Stack align="center">

@@ -82,8 +82,14 @@ SUBSYSTEM_DEF(bard_music)
 
 /datum/bard_timed_track/proc/set_song(song_title, song_file, custom_track = FALSE)
 	title = song_title
-	file_path = song_file
-	duration_seconds = bard_track_file_duration_seconds(song_file)
+	// song_list хранит /sound-датумы (sound("path")) — нормализуем в путь/реф один раз здесь,
+	// чтобы file_path ВСЕГДА был путём: это чинит rustg_sound_length, export_data, preload_band_track, curfile.
+	if(istype(song_file, /sound))
+		var/sound/S = song_file
+		file_path = S.file
+	else
+		file_path = song_file
+	duration_seconds = bard_track_file_duration_seconds(file_path)
 	analyzed_duration = (duration_seconds != BARD_TRACK_DEFAULT_DURATION_SECONDS)
 	custom = custom_track
 
@@ -173,8 +179,20 @@ SUBSYSTEM_DEF(bard_music)
 	. = BARD_TRACK_DEFAULT_DURATION_SECONDS
 	if(!song_file)
 		return
-	var/length_ticks = rustg_sound_length("[song_file]")
-	if(length_ticks)
+
+	// song_file может быть: /sound-датум, file-реф 'path.ogg', или строка "path.ogg".
+	// Нормализуем, чтобы никогда не передать RustG "[датум]" == "/sound".
+	var/resolved_file = song_file
+	if(istype(song_file, /sound))
+		var/sound/S = song_file
+		resolved_file = S.file
+
+	// Рантайм-стрим (sound(file(...)) и т.п.) — длину не узнать, оставляем дефолт
+	if(!istext(resolved_file) && !isfile(resolved_file))
+		return
+
+	var/length_ticks = rustg_sound_length(resolved_file)
+	if(length_ticks && length_ticks > 0)
 		. = max(round(length_ticks / 10), 1)
 
 /proc/bard_track_num(value, fallback = 0)

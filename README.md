@@ -1,6 +1,6 @@
 <p align="center">
  <img width="450px" src="https://github.com/user-attachments/assets/6b803f1d-3262-4373-8531-8f8415a3d05f" align="center" alt="Twilight Fortress" />
- <h1 align="center">Twilight Axis</h1>
+ <h1 align="center">Moonlight</h1>
  <h2 align="center">Roleplay Medieval High-Fantasy | D&D-like Server</h2>
 </p>
 
@@ -8,11 +8,18 @@
 
 | Website                   | Link                                           |
 |---------------------------|------------------------------------------------|
-| Discord          | [https://discord.gg/6Sga5Uvdn6](https://discord.gg/6Sga5Uvdn6) |
+| Discord          | [https://discord.gg/maw7mFCxs](https://discord.gg/maw7mFCxs) |
 | Wiki Twilight Axis                     | [Wiki](https://wiki.twilight-fortress-axis.ru/index.php?title=%D0%97%D0%B0%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F_%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0) |
 
   ## LICENSE
 Original Fork Originates from [commit c28b351807bad950d2b323ada048190844bbda32](https://github.com/tgstation/tgstation/commit/c28b351807bad950d2b323ada048190844bbda32).
+
+We are not the creators of the work Twilight-Axis.
+If you are looking for the original version of the game, here is the link.
+(https://github.com/Twilight-Fortress-SS13/Twilight-Axis).
+
+This build has been reconfigured for host-specific requirements on Debian Linux using a Docker file.
+Operation on Windows is not guaranteed.
 
 All code after [commit 333c566b88108de218d882840e61928a9b759d8f on 2014/31/12 at 4:38 PM PST](https://github.com/tgstation/tgstation/commit/333c566b88108de218d882840e61928a9b759d8f) is licensed under [GNU AGPL v3](https://www.gnu.org/licenses/agpl-3.0.html).
 
